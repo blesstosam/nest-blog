@@ -1,0 +1,71 @@
+{
+  "name": "nuxt-demo-2",
+  "version": "1.0.0",
+  "description": "My ultimate Nuxt.js project",
+  "author": "weilei",
+  "private": true,
+  "scripts": {
+    "serve": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
+    "build": "nuxt build",
+    "start": "cross-env NODE_ENV=production ts-node -T server/index.ts",
+    "generate": "nuxt generate",
+    "lint": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "test": "ava",
+    "pulish": "nuxt build && npm start"
+  },
+  "lint-staged": {
+    "*.{ts,js,vue}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "ava": {
+    "files": [
+      "test/**/*"
+    ]
+  },
+  "dependencies": {
+    "@nuxt/typescript-runtime": "^0.1.7",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "cross-env": "^5.2.0",
+    "iview": "^3.1.5",
+    "koa": "^2.6.2",
+    "koa-router": "^7.4.0",
+    "nuxt": "^2.10.2",
+    "sha256": "^0.2.0",
+    "typescript": "^3.6.3",
+    "vue-property-decorator": "^8.2.2"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^0.3.2",
+    "@nuxt/typescript-build": "^0.2.10",
+    "@nuxtjs/eslint-config-typescript": "^0.1.3",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "@types/koa": "^2.0.50",
+    "@types/sha256": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.3.1",
+    "@typescript-eslint/parser": "^2.3.1",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "ava": "^2.4.0",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "husky": "^2.6.0",
+    "jsdom": "^15.1.1",
+    "lint-staged": "^8.2.1",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.16.4",
+    "require-extension-hooks": "^0.3.3",
+    "require-extension-hooks-babel": "^1.0.0",
+    "require-extension-hooks-vue": "^3.0.0",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "ts-node": "^8.4.1"
+  }
+}
