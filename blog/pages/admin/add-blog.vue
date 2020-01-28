@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h3>文章列表</h3>
+    <h3>添加文章</h3>
   </div>
 </template>
 
@@ -21,11 +21,10 @@ import Logo from '@/components/Test.vue';
   }
   // middleware: 'logger'
 })
-export default class PagesIndex extends Vue {
+export default class AddBlog extends Vue {
   created() {
     // this.reqData()
   }
-  // a: object = {}
   async reqData() {
     const resp = await axios.get('http://localhost:3000/api');
 

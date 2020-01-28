@@ -21,14 +21,10 @@
       <v-btn icon @click.stop="clipped = !clipped">
         <v-icon>mdi-application</v-icon>
       </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
+
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn text @click.stop="loginDialogShow = true">
-        登录
-      </v-btn>
+      <v-btn text @click.stop="loginDialogShow = true">登录</v-btn>
     </v-app-bar>
 
     <v-content>
@@ -61,18 +57,17 @@ export default class Default extends Vue {
   items: Array<any> = [
     {
       icon: 'mdi-apps',
-      title: 'Welcome',
+      title: '博客',
       to: '/'
     },
     {
       icon: 'mdi-chart-bubble',
-      title: 'Inspire',
-      to: '/inspire'
+      title: '添加博客',
+      to: '/admin/add-blog'
     }
   ];
   miniVariant: boolean = false;
-  right: boolean = true;
-  rightDrawer: boolean = false;
+
   title: string = 'Blesstosam的技术博客';
 
   login() {
