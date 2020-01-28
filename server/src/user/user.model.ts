@@ -9,7 +9,11 @@ export class User {
   @prop({required: true})
   username!: string;
 
-  @prop({required: true})
+  // select - false: 从数据库查找出来默认不带该字段
+  @prop({
+    required: true, 
+    // select: false
+  })
   passward!: string;
 
   @prop({default: false})

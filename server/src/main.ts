@@ -1,15 +1,23 @@
+require('dotenv').config()
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 import {ValidationPipe} from '@nestjs/common'
 
 import * as cookieParser from 'cookie-parser'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    // logger: ['error', 'warn', 'debug']
-  });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.use(cookieParser())
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
 
   const options = new DocumentBuilder()
     .setTitle('博客系统')
@@ -21,10 +29,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.use(cookieParser())
+  await app.listen(process.env.SERVER_PORT);
 
-  await app.listen(3000);
-
-  console.log('http://localhost:3000/api-docs');
+  console.log(`http://localhost:${process.env.SERVER_PORT}/api-docs`);
 }
 bootstrap();

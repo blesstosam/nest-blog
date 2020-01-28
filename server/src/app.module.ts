@@ -9,7 +9,7 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    TypegooseModule.forRoot('mongodb://localhost:27017/nest-blog-api', {
+    TypegooseModule.forRoot(process.env.DB, {
       useNewUrlParser: true
     }),
     PostsModule,
