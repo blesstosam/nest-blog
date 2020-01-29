@@ -13,6 +13,9 @@ import * as cookieParser from 'cookie-parser'
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  // 解决跨域问题
+  app.enableCors();
+
   app.use(cookieParser())
 
   app.useStaticAssets(join(__dirname, '..', 'public'));

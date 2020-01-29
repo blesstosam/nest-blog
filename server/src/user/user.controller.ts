@@ -6,7 +6,7 @@ import { User } from './user.model'
 import { CommonResponse } from '../types'
 import { IsNotEmpty } from 'class-validator'
 import { Md5 } from 'ts-md5/dist/md5'
-import {SetCookies, ClearCookies} from '@nestjsplus/cookies'
+// import {SetCookies, ClearCookies} from '@nestjsplus/cookies'
 
 export class CreateUserDto {
   @ApiProperty({ description: '用户名', example: 'user1' })
@@ -86,12 +86,8 @@ export class UserController {
   }
 
   @ApiOperation({ description: '用户退出' })
-  @ClearCookies('user_info')
   @Post('logout')
   async logout(): Promise<CommonResponse<boolean>> {
     return { code: 200, msg: '退出成功', data: true }
   }
-
-
-
 }

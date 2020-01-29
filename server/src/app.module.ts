@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 
 import { PostsModule } from './posts/posts.module';
 import { UserModule } from './user/user.module';
+import { ContentModule } from './content/content.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { UserModule } from './user/user.module';
       useNewUrlParser: true
     }),
     PostsModule,
-    UserModule
+    UserModule,
+    ContentModule
   ],
   controllers: [AppController],
   providers: [AppService],

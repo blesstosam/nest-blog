@@ -62,8 +62,13 @@ export default class Default extends Vue {
     },
     {
       icon: 'mdi-chart-bubble',
+      title: '博客列表',
+      to: '/admin/content-list'
+    },
+    {
+      icon: 'mdi-chart-bubble',
       title: '添加博客',
-      to: '/admin/add-blog'
+      to: '/admin/add-content'
     }
   ];
   miniVariant: boolean = false;

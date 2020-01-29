@@ -21,7 +21,7 @@ import Logo from '@/components/Test.vue';
   }
   // middleware: 'logger'
 })
-export default class AddBlog extends Vue {
+export default class AddContent extends Vue {
   created() {
     // this.reqData()
   }
