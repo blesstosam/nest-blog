@@ -2,34 +2,13 @@
 
 A simple blog written by NestJs.
 
-## Installation
+## Include
 
-```bash
-$ npm install
-```
+1. Server - written bu NestJs
+2. Blog Admin & Blog - written by NuxtJs
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
+## Tech. used
+1. NextJs
+2. NuxtJs
+3. MongoBb
+4. Vue-Apollo (to add)
