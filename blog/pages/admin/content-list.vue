@@ -15,42 +15,36 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import {contentList} from '../../api/user/index'
+import { contentList } from '../../api/user/index';
 
 @Component({
-  components: { },
+  components: {},
   /* eslint-disable-next-line */
   async asyncData({ req, params }) {
-    const res = await contentList({pageSize: 10, pageNum: 1 });
-    console.log(res, 'list')
+    const res = await contentList({ pageSize: 10, pageNum: 1 });
     return {
       list: res || []
-    }
+    };
   }
 })
 export default class ContentList extends Vue {
-  created() {
-
-  }
+  created() {}
 
   pager = {
     pageNum: 1,
     pageSize: 10,
     total: 0
-  }
+  };
 
-  reqList() {
+  reqList() {}
 
-  }
-
-  selected = []
+  selected = [];
   headers = [
     { text: '标题', value: 'title' },
     { text: '简介', value: 'desc' },
     { text: '正文', value: 'content' },
     { text: '创建时间', value: 'createdAt' },
-    { text: '修改时间', value: 'updatedAt' },
-  ]
-  
+    { text: '修改时间', value: 'updatedAt' }
+  ];
 }
 </script>
