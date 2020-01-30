@@ -1,6 +1,6 @@
 ## Description
 
-A simple blog written by NestJs.
+> A simple blog - Server.
 
 ## Installation
 

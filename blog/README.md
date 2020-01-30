@@ -1,6 +1,6 @@
-# nuxt-demo-2
+# Nest Blog
 
-> My ultimate Nuxt.js project
+> A simple blog - Blog and Admin.
 
 ## Build Setup
 
