@@ -29,5 +29,7 @@ module.exports = {
       "args": "after-used",
       "ignoreRestSiblings": false
     }],
+
+    "vue/no-v-html": "off"
   }
 }

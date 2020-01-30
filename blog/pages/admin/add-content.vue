@@ -14,9 +14,9 @@
     </v-form>
 
     <v-snackbar v-model="snackbar">
-        {{ snackbarText }}
-        <v-btn color="pink" text @click="snackbar = false">关闭</v-btn>
-      </v-snackbar>
+      {{ snackbarText }}
+      <v-btn color="pink" text @click="snackbar = false">关闭</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ import { createContent } from '../../api/user/index';
 })
 export default class AddContent extends Vue {
   snackbar = false;
-  snackbarText = ''
+  snackbarText = '';
 
   valid = true;
   title = '';
@@ -47,12 +47,12 @@ export default class AddContent extends Vue {
         const userInfo = JSON.parse(_userInfo);
         const res = await createContent({ title, desc, content, user: userInfo.id });
         if (res.code === 200) {
-          this.snackbarText = res.msg
+          this.snackbarText = res.msg;
           this.snackbar = true;
           (this.$refs.form as any).reset();
         } else {
-          this.snackbarText = res.msg
-          this.snackbar = true
+          this.snackbarText = res.msg;
+          this.snackbar = true;
         }
       }
     }
