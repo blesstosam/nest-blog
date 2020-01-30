@@ -44,8 +44,14 @@ export default class LoginCard extends Vue {
 
   async doLogin() {
     const { username, password } = this;
-    /* eslint-disable-next-line */
     const res = await login({ username, password });
+    if (res.code ===200) {
+      localStorage.setItem('user_info', JSON.stringify(res.data))
+      this.isShow = false;
+      this.handleLoined(res.data)
+    } else {
+      alert(res.msg);
+    }
   }
 
   @Prop({ required: true, default: false }) readonly show!: boolean;
@@ -59,6 +65,11 @@ export default class LoginCard extends Vue {
   @Emit('update:show')
   handleEmit(val: boolean) {
     return val;
+  }
+
+  @Emit('logined')
+  handleLoined(userInfo: any) {
+    return userInfo;
   }
 
   @Watch('isShow')

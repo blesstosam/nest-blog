@@ -15,20 +15,20 @@ export class CreateUserDto {
 
   @ApiProperty({ description: '用户密码', example: 'pass1' })
   @IsNotEmpty({ message: '缺少用户名密码' })
-  passward: string;
+  password: string;
 
   @ApiProperty({ description: '用户是否是管理员', example: false })
   isAdmin?: boolean;
 }
 
 export class LoginUserDto {
-  @ApiProperty({ description: '用户名', example: 'user1' })
+  @ApiProperty({ description: '用户名', example: 'sam' })
   @IsNotEmpty({ message: '缺少用户名' })
   username: string;
 
-  @ApiProperty({ description: '用户密码', example: 'pass1' })
+  @ApiProperty({ description: '用户密码', example: '888888' })
   @IsNotEmpty({ message: '缺少用户名密码' })
-  passward: string;
+  password: string;
 }
 
 @ApiTags('用户模块')
@@ -46,12 +46,12 @@ export class UserController {
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<CommonResponse<boolean>> {
     // 查找数据库中是否存在该用户名
-    const { username, passward } = createUserDto
+    const { username, password } = createUserDto
     const res = await this.userModel.findOne({ username })
     if (res) return { code: 500, msg: '用户名已存在', data: false }
 
     // 插入该用户名
-    await this.userModel.create({ ...createUserDto, passward: Md5.hashStr(passward) })
+    await this.userModel.create({ ...createUserDto, password: Md5.hashStr(password) })
     return {
       code: 200, msg: '用户名创建成功', data: true
     }
@@ -60,20 +60,19 @@ export class UserController {
   @ApiOperation({ description: '用户登录' })
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto, @Response() response): Promise<void> {
-    const { username, passward } = loginUserDto;
+    const { username, password } = loginUserDto;
     try {
       const res = await this.userModel.findOne({ username })
       if (!res) {
         response.json({ code: 500, msg: '该用户不存在', data: null })
         return;
       }
-
-      if (res.passward !== Md5.hashStr(passward)) {
+      if (res.password !== Md5.hashStr(password)) {
         response.json({ code: 500, msg: '密码不正确', data: null })
         return;
       }
       // set cookie
-      const _data = { username: res.username, isAdmin: !!res.isAdmin }
+      const _data = { username: res.username, isAdmin: !!res.isAdmin, id: res._id }
       
       response._cookies = [{name: 'user_info', value: JSON.stringify(_data)}]
       response.json({ code: 200, msg: '登录成功', data: _data })

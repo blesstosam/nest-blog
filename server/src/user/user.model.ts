@@ -15,7 +15,7 @@ export class User {
     required: true, 
     // select: false
   })
-  passward!: string;
+  password!: string;
 
   @prop({default: false})
   isAdmin: boolean

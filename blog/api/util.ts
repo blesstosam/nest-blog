@@ -32,7 +32,7 @@ export class HttpService {
     // respone拦截器
     this.service.interceptors.response.use(
       (response: AxiosResponse) => {
-        if (response.status !== 200) {
+        if (response.status !== 200 && response.status !== 201) {
           // 405: 其他客户端登录了;  407:Token 过期了;
           if (response.status !== 407 && response.status !== 405) {
             Vue.prototype.$Message.error('网络异常，请稍后重试');
