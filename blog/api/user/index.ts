@@ -16,6 +16,15 @@ export function contentList(param: { pageSize: number; pageNum: number }): Promi
   return httpInstance.get('/content/list', param);
 }
 
-export function createContent(param: { user: string;  title: string; desc?: string; content: string }): Promise<AjaxResponse> {
+export function contentDetail(param: { id: string }): Promise<AjaxResponse> {
+  return httpInstance.get(`/content/${param.id}`, {});
+}
+
+export function createContent(param: {
+  user: string;
+  title: string;
+  desc?: string;
+  content: string;
+}): Promise<AjaxResponse> {
   return httpInstance.post('/content/create', param);
 }

@@ -1,35 +1,37 @@
 <template>
   <div class="container">
-    <h3>文章列表</h3>
+    <h3 class="pb-6">文章列表</h3>
+
+    <v-card class="mx-auto" tile>
+      <v-list-item two-line v-for="item in list" :key="item._id">
+        <v-list-item-content>
+          <v-list-item-title>
+            <a :href="`/blog/${item._id}`">{{item.title}}</a>
+          </v-list-item-title>
+          <v-list-item-subtitle>{{item.content}}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-card>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import axios from 'axios';
-import Logo from '@/components/Test.vue';
+import {contentList} from '../api/user/index'
+
 
 @Component({
-  components: { Logo },
   /* eslint-disable-next-line */
   async asyncData({ req, params }) {
-    const data = await axios.get('http://localhost:3000/api');
-
-    // 这里也用来接收路由传参 通过params来接收
-    const resp = await axios.get('http://icanhazip.com');
-    return { ip: resp.data || '111', a: data.data };
+    const res = await contentList({pageSize: 10, pageNum: 1})
+    return {
+      list: res || []
+    }
   }
+
   // middleware: 'logger'
 })
 export default class PagesIndex extends Vue {
-  created() {
-    // this.reqData()
-  }
-  // a: object = {}
-  async reqData() {
-    const resp = await axios.get('http://localhost:3000/api');
 
-    return { a: resp.data };
-  }
 }
 </script>

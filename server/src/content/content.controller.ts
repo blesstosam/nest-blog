@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import {Content} from './content.model'
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { ApiTags, ApiProperty, ApiOperation } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
+import { CommonResponse } from 'src/types';
 
 export class CreateContentDto {
   @ApiProperty({description: '用户id', example: '5e3002bef4b5d41f52cad5d0'})
@@ -39,9 +40,17 @@ export class ContentController {
     return await this.contentModel.find()
   }
 
+  @ApiOperation({summary: '博客详情'})
+  @Get(':id')
+  async detail(@Param('id') id: string) {
+    return await this.contentModel.findOne({_id: id})
+  }
+
   @ApiOperation({summary: '创建博客'})
   @Post('create')
-  async create(@Body() body: CreateContentDto) {
-    return this.contentModel.create(body);
+  async create(@Body() body: CreateContentDto): Promise<CommonResponse<boolean>> {
+    const res = this.contentModel.create(body);
+    if (res) return {code: 200, msg: '创建成功', data: true}
+    return {code: 500, msg: '创建失败', data: false}
   }
 }

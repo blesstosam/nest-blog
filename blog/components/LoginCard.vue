@@ -45,10 +45,10 @@ export default class LoginCard extends Vue {
   async doLogin() {
     const { username, password } = this;
     const res = await login({ username, password });
-    if (res.code ===200) {
-      localStorage.setItem('user_info', JSON.stringify(res.data))
+    if (res.code === 200) {
+      localStorage.setItem('user_info', JSON.stringify(res.data));
       this.isShow = false;
-      this.handleLoined(res.data)
+      this.handleLoined(res.data);
     } else {
       alert(res.msg);
     }

@@ -28,8 +28,6 @@ import { contentList } from '../../api/user/index';
   }
 })
 export default class ContentList extends Vue {
-  created() {}
-
   pager = {
     pageNum: 1,
     pageSize: 10,

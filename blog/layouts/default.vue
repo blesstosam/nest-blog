@@ -25,8 +25,8 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <div v-if="userInfo.username">
-        <span>{{userInfo.username}}, 您好！</span>
-        <v-btn text class="red--text" @click="confirm = true ">退出</v-btn>
+        <span>{{ userInfo.username }}, 您好！</span>
+        <v-btn text class="red--text" @click="confirm = true">退出</v-btn>
       </div>
       <v-btn v-else text @click.stop="loginDialogShow = true">登录</v-btn>
     </v-app-bar>
@@ -41,7 +41,7 @@
       <span>Copyright &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
 
-    <LoginCard @logined="handleLogin" :show.sync="loginDialogShow" />
+    <LoginCard :show.sync="loginDialogShow" @logined="handleLogin" />
 
     <v-dialog v-model="confirm" persistent max-width="290">
       <template v-slot:activator="{ on }">
@@ -62,37 +62,37 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { logout } from '../api/user/index';
 import LoginCard from '@/components/LoginCard.vue';
-import { logout } from '../api/user/index'
 
 @Component({
   components: { LoginCard }
 })
 export default class Default extends Vue {
   mounted() {
-    const _userInfo = window.localStorage.getItem('user_info')
+    const _userInfo = window.localStorage.getItem('user_info');
     if (_userInfo) {
-      const userInfo = this.userInfo = JSON.parse(_userInfo);
+      const userInfo = (this.userInfo = JSON.parse(_userInfo));
       if (userInfo && userInfo.isAdmin) {
         const arr = [
           {
-            icon: 'mdi-chart-bubble',
+            icon: 'mdi-lyft',
             title: '博客列表',
             to: '/admin/content-list'
           },
           {
-            icon: 'mdi-chart-bubble',
+            icon: 'mdi-apps',
             title: '添加博客',
             to: '/admin/add-content'
           }
-        ]
-        this.items = [...this.items, ...arr]
+        ];
+        this.items = [...this.items, ...arr];
       }
     }
   }
-  
-  userInfo: any = {}
-  
+
+  userInfo: any = {};
+
   loginDialogShow: boolean = false;
 
   clipped: boolean = false;
@@ -101,22 +101,22 @@ export default class Default extends Vue {
 
   confirm = false;
   items = [
-     {
-        icon: 'mdi-apps',
-        title: '博客',
-        to: '/'
-      },
-  ]
+    {
+      icon: 'mdi-apps',
+      title: '博客',
+      to: '/'
+    }
+  ];
 
   miniVariant: boolean = false;
 
   title: string = 'Blesstosam的技术博客';
 
   async doLogout() {
-    await logout({username: this.userInfo.username})
+    await logout({ username: this.userInfo.username });
     this.confirm = false;
-    this.userInfo = {}
-    localStorage.setItem('user_info', '')
+    this.userInfo = {};
+    localStorage.setItem('user_info', '');
   }
 
   handleLogin(userInfo) {
