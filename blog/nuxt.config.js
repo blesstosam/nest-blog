@@ -3,7 +3,7 @@ const colors = require('vuetify/es5/util/colors').default;
 module.exports = {
   mode: 'universal',
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Blesstosam 的博客',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
