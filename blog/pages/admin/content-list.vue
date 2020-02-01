@@ -34,8 +34,6 @@ export default class ContentList extends Vue {
     total: 0
   };
 
-  reqList() {}
-
   selected = [];
   headers = [
     { text: '标题', value: 'title' },

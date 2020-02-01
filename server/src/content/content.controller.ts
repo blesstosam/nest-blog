@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import {Content} from './content.model'
 import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { ApiTags, ApiProperty, ApiOperation } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CommonResponse } from 'src/types';
+import { CommonResponse, CommonListResponse } from 'src/types';
 
 export class CreateContentDto {
   @ApiProperty({description: '用户id', example: '5e3002bef4b5d41f52cad5d0'})
@@ -29,6 +29,14 @@ export class CreateContentDto {
   comments: Array<any>
 }
 
+export class PagerDto {
+  @ApiProperty({description: '页数', example: 10})
+  pageSize: number; 
+  
+  @ApiProperty({description: '页码', example: 1})
+  pageNum: number
+}
+
 @ApiTags('内容')
 @Controller('content')
 export class ContentController {
@@ -36,8 +44,17 @@ export class ContentController {
 
   @ApiOperation({summary: '博客列表'})
   @Get('list')
-  async list() {
-    return await this.contentModel.find()
+  async list(@Query() query: PagerDto): Promise<CommonListResponse>{
+    console.log(query, 'query')
+    let {pageNum = 1, pageSize = 10 } = query;
+    console.log(pageNum, pageSize, '---')
+    // 将参数转化为number类型
+    pageNum = Number(pageNum)
+    pageSize = Number(pageSize)
+    const total = await this.contentModel.count({})
+    const res = await this.contentModel.find().skip((pageNum -1) * pageSize).limit(pageSize);
+    if (res) return {code: 200, msg: '获取成功', data: {total, list: res, pageNum, pageSize }}
+    return {code: 500, msg: '获取失败', data: {total: 0, list: res, pageNum, pageSize}}
   }
 
   @ApiOperation({summary: '博客详情'})
