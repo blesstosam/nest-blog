@@ -31,16 +31,16 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { contentList } from '../api/user/index';
-import {Pager} from '../types'
+import { Pager } from '../types';
 
 @Component({
   /* eslint-disable-next-line */
   async asyncData({req, params}) {
-    let pager: Pager = {
+    const pager: Pager = {
       current: 1,
       pageSize: 2,
-      total: 0,
-    }
+      total: 0
+    };
     const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });
     if (res.code === 200) {
       const { list = [], total = 0 } = res.data;
@@ -60,7 +60,7 @@ export default class PagesIndex extends Vue {
   pager: Pager;
 
   get totalPages(): number {
-    return Math.ceil(this.pager.total / this.pager.pageSize)
+    return Math.ceil(this.pager.total / this.pager.pageSize);
   }
 
   async handlePageChange(page: number) {
