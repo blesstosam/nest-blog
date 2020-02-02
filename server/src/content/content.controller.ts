@@ -45,9 +45,7 @@ export class ContentController {
   @ApiOperation({summary: '博客列表'})
   @Get('list')
   async list(@Query() query: PagerDto): Promise<CommonListResponse>{
-    console.log(query, 'query')
     let {pageNum = 1, pageSize = 10 } = query;
-    console.log(pageNum, pageSize, '---')
     // 将参数转化为number类型
     pageNum = Number(pageNum)
     pageSize = Number(pageSize)
