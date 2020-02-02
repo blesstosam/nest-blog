@@ -4,3 +4,9 @@ export interface AjaxResponse<T = any> {
   data: T;
   msg: string;
 }
+
+export interface Pager {
+  current: number;
+  pageSize: number;
+  total: number;
+}

@@ -22,7 +22,7 @@
     <v-pagination
       v-model="pager.current"
       class="pager"
-      :length="pager.totalPages"
+      :length="totalPages"
       @input="handlePageChange"
     ></v-pagination>
   </div>
@@ -31,34 +31,37 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { contentList } from '../api/user/index';
+import {Pager} from '../types'
 
 @Component({
   /* eslint-disable-next-line */
   async asyncData({req, params}) {
-    // TODO
-    // 这里的pagesize 怎么和pager定义放到一个地方?
-    const res = await contentList({ pageSize: 2, pageNum: 1 });
+    let pager: Pager = {
+      current: 1,
+      pageSize: 2,
+      total: 0,
+    }
+    const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });
     if (res.code === 200) {
       const { list = [], total = 0 } = res.data;
-      return { list, total };
+      pager.total = total;
+      return { list, pager };
     }
-    return { list: [], total: 0 };
+    return { list: [], pager };
   }
 
   // middleware: 'logger'
 })
 export default class PagesIndex extends Vue {
-  created() {
-    this.pager.totalPages = Math.ceil(this.total / this.pager.pageSize);
-  }
+  // 定义数据的类型 这些数据都是通过 asyncData 从服务器传递过来的
+  // asyncData 可以理解为 data 函数， 只不过数据是在服务器定义获取的 然后混合到客户端的data函数里
   list: any[];
   total: number;
-  pager = {
-    current: 1,
-    pageSize: 2,
-    total: 0,
-    totalPages: 0
-  };
+  pager: Pager;
+
+  get totalPages(): number {
+    return Math.ceil(this.pager.total / this.pager.pageSize)
+  }
 
   async handlePageChange(page: number) {
     this.pager.current = page;
@@ -68,10 +71,9 @@ export default class PagesIndex extends Vue {
       const { list = [], total = 0 } = res.data;
       this.list = [...list];
       this.pager.total = total;
-      this.pager.totalPages = Math.ceil(total / this.pager.pageSize);
     } else {
       this.list = [];
-      this.pager.total = this.pager.totalPages = 0;
+      this.pager.total = 0;
     }
   }
 }

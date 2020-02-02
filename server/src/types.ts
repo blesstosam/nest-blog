@@ -9,3 +9,9 @@ export interface CommonListResponse<T = any> {
   msg: string;
   data: {total: number; pageSize: number; pageNum: number; list: Array<T>}
 }
+
+export interface Pager {
+  current: number;
+  pageSize: number;
+  total: number;
+}
