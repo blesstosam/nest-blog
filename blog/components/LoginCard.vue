@@ -47,8 +47,8 @@ export default class LoginCard extends Vue {
     const res = await login({ username, password });
     if (res.code === 200) {
       localStorage.setItem('user_info', JSON.stringify(res.data));
+      this.$store.commit('UPDATE_USER', res.data);
       this.isShow = false;
-      this.handleLoined(res.data);
     } else {
       alert(res.msg);
     }
@@ -65,11 +65,6 @@ export default class LoginCard extends Vue {
   @Emit('update:show')
   handleEmit(val: boolean) {
     return val;
-  }
-
-  @Emit('logined')
-  handleLoined(userInfo: any) {
-    return userInfo;
   }
 
   @Watch('isShow')

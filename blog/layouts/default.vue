@@ -18,11 +18,11 @@
 
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <div v-if="userInfo.username">
+      <!-- <div v-if="userInfo.username">
         <span>{{ userInfo.username }}, 您好！</span>
         <v-btn text class="red--text" @click="confirm = true">退出</v-btn>
-      </div>
-      <v-btn v-else text @click.stop="loginDialogShow = true">登录</v-btn>
+      </div> -->
+      <!-- <v-btn v-else text @click.stop="loginDialogShow = true">登录</v-btn> -->
     </v-app-bar>
 
     <v-content>
@@ -35,7 +35,7 @@
       <span>Copyright &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
 
-    <LoginCard :show.sync="loginDialogShow" @logined="handleLogin" />
+    <LoginCard :show.sync="loginDialogShow" />
 
     <v-dialog v-model="confirm" persistent max-width="290">
       <template v-slot:activator="{ on }">
@@ -64,34 +64,36 @@ import LoginCard from '@/components/LoginCard.vue';
 })
 export default class Default extends Vue {
   mounted() {
-    const _userInfo = window.localStorage.getItem('user_info');
-    if (_userInfo) {
-      const userInfo = (this.userInfo = JSON.parse(_userInfo));
-      if (userInfo && userInfo.isAdmin) {
-        const arr = [
-          {
-            icon: 'mdi-lyft',
-            title: '博客列表',
-            to: '/admin/content-list'
-          },
-          {
-            icon: 'mdi-apps',
-            title: '添加博客',
-            to: '/admin/add-content'
-          }
-        ];
-        this.items = [...this.items, ...arr];
-      }
-    }
+    // if logined
+    console.log(this.userInfo)
+    // if (this.userInfo.username && this.userInfo.isAdmin) {
+    //   const arr = [
+    //     {
+    //       icon: 'mdi-lyft',
+    //       title: '博客列表',
+    //       to: '/admin/content-list'
+    //     },
+    //     {
+    //       icon: 'mdi-apps',
+    //       title: '添加博客',
+    //       to: '/admin/add-content'
+    //     }
+    //   ];
+    //   this.items = [...this.items, ...arr];
+    // }
   }
 
-  userInfo: any = {};
+  get userInfo() {
+    console.log(this.$store.state);
+    return this.$store.state.user;
+  }
 
   loginDialogShow: boolean = false;
 
   clipped: boolean = false;
   drawer: boolean = false;
   fixed: boolean = false;
+  miniVariant: boolean = false;
 
   confirm = false;
   items = [
@@ -102,19 +104,13 @@ export default class Default extends Vue {
     }
   ];
 
-  miniVariant: boolean = false;
-
   title: string = 'Blesstosam的技术博客';
 
   async doLogout() {
     await logout({ username: this.userInfo.username });
     this.confirm = false;
-    this.userInfo = {};
-    localStorage.setItem('user_info', '');
-  }
-
-  handleLogin(userInfo) {
-    this.userInfo = userInfo;
+    localStorage.setItem('user_info', JSON.stringify({}));
+    this.$store.commit('UPDATE_USER', {});
   }
 }
 </script>
