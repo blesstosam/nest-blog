@@ -1,16 +1,14 @@
-export interface User {
-  username: string;
-  isAdmin: boolean;
-}
-console.log("-------in store----")
-let user: User | undefined;
+
+let user;
 try {
   // in client side
-  if (window) {
+  // 在客户端执行了之后但是user还是原来的 不起作用
+  if (typeof window !== 'undefined') {
     const userInfo = localStorage.getItem('user_info');
     if (userInfo) {
       user = JSON.parse(userInfo);
     }
+    // in server side
   } else {
     user = { username: '', isAdmin: false };
   }
@@ -19,12 +17,13 @@ try {
   throw new Error(`parse user_info error in store: ${e}`);
 }
 
-export const state = (): { user: User | undefined } => ({
-  user
-});
+// console.log(user, 'user')
+export const state = () => {
+  return { user };
+}
 
 export const mutations = {
-  UPDATE_USER(user: User) {
-    (state as any).user = user;
+  UPDATE_USER(state, user) {
+    state.user = user;
   }
 };

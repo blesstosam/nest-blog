@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "target": "esnext",
+    "target": "es2018",
     // "module": "esnext",
     "moduleResolution": "node",
     "lib": [

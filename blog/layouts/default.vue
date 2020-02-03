@@ -18,11 +18,11 @@
 
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <!-- <div v-if="userInfo.username">
+      <div v-if="userInfo.username">
         <span>{{ userInfo.username }}, 您好！</span>
         <v-btn text class="red--text" @click="confirm = true">退出</v-btn>
-      </div> -->
-      <!-- <v-btn v-else text @click.stop="loginDialogShow = true">登录</v-btn> -->
+      </div>
+      <v-btn v-else text @click.stop="loginDialogShow = true">登录</v-btn>
     </v-app-bar>
 
     <v-content>
@@ -65,26 +65,33 @@ import LoginCard from '@/components/LoginCard.vue';
 export default class Default extends Vue {
   mounted() {
     // if logined
-    console.log(this.userInfo)
-    // if (this.userInfo.username && this.userInfo.isAdmin) {
-    //   const arr = [
-    //     {
-    //       icon: 'mdi-lyft',
-    //       title: '博客列表',
-    //       to: '/admin/content-list'
-    //     },
-    //     {
-    //       icon: 'mdi-apps',
-    //       title: '添加博客',
-    //       to: '/admin/add-content'
-    //     }
-    //   ];
-    //   this.items = [...this.items, ...arr];
-    // }
+    try {
+      let _user = localStorage.getItem('user_info')
+      if (_user) {
+        const userInfo= JSON.parse(_user)
+        this.$store.commit('UPDATE_USER', {username: userInfo.username, isAdmin: userInfo.isAdmin})
+        if (userInfo.username && userInfo.isAdmin) {
+          const arr = [
+            {
+              icon: 'mdi-lyft',
+              title: '博客列表',
+              to: '/admin/content-list'
+            },
+            {
+              icon: 'mdi-apps',
+              title: '添加博客',
+              to: '/admin/add-content'
+            }
+          ];
+          this.items = [...this.items, ...arr];
+        }
+      }
+    } catch(e) {
+      throw new Error(`${e}`)
+    }
   }
 
   get userInfo() {
-    console.log(this.$store.state);
     return this.$store.state.user;
   }
 
