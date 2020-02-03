@@ -1,11 +1,12 @@
 let user;
 try {
   // in client side
-  // 在客户端执行了之后但是user还是原来的 不起作用
   if (typeof window !== 'undefined') {
     const userInfo = localStorage.getItem('user_info');
     if (userInfo) {
-      user = JSON.parse(userInfo);
+      const _user = JSON.parse(userInfo);
+      // 改写__NUXT__.state
+      window.__NUXT__.state.user = {username: _user.username, isAdmin: _user.isAdmin}
     }
     // in server side
   } else {
@@ -16,7 +17,6 @@ try {
   throw new Error(`parse user_info error in store: ${e}`);
 }
 
-// console.log(user, 'user')
 export const state = () => {
   return { user };
 };
@@ -26,3 +26,12 @@ export const mutations = {
     state.user = user;
   }
 };
+
+// 将服务器的数据传递给客户端
+// export const actions = {
+//   nuxtServerInit ({ commit }, { req }) {
+//     // if (req.session.user) {
+//       commit('UPDATE_USER', {username: '999', isAdmin: true})
+//     // }
+//   }
+// }
