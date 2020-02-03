@@ -1,4 +1,3 @@
-
 let user;
 try {
   // in client side
@@ -20,7 +19,7 @@ try {
 // console.log(user, 'user')
 export const state = () => {
   return { user };
-}
+};
 
 export const mutations = {
   UPDATE_USER(state, user) {

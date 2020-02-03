@@ -66,10 +66,13 @@ export default class Default extends Vue {
   mounted() {
     // if logined
     try {
-      let _user = localStorage.getItem('user_info')
+      const _user = localStorage.getItem('user_info');
       if (_user) {
-        const userInfo= JSON.parse(_user)
-        this.$store.commit('UPDATE_USER', {username: userInfo.username, isAdmin: userInfo.isAdmin})
+        const userInfo = JSON.parse(_user);
+        this.$store.commit('UPDATE_USER', {
+          username: userInfo.username,
+          isAdmin: userInfo.isAdmin
+        });
         if (userInfo.username && userInfo.isAdmin) {
           const arr = [
             {
@@ -86,8 +89,8 @@ export default class Default extends Vue {
           this.items = [...this.items, ...arr];
         }
       }
-    } catch(e) {
-      throw new Error(`${e}`)
+    } catch (e) {
+      throw new Error(`${e}`);
     }
   }
 

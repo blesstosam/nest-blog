@@ -2,7 +2,6 @@ export interface User {
   username: string;
   isAdmin: boolean;
 }
-console.log("-------in store----")
 let user: User | undefined;
 try {
   // in client side
