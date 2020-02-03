@@ -6,7 +6,7 @@ try {
     if (userInfo) {
       const _user = JSON.parse(userInfo);
       // 改写__NUXT__.state
-      window.__NUXT__.state.user = {username: _user.username, isAdmin: _user.isAdmin}
+      window.__NUXT__.state.user = { username: _user.username, isAdmin: _user.isAdmin };
     }
     // in server side
   } else {

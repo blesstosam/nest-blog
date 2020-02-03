@@ -65,7 +65,7 @@ import LoginCard from '@/components/LoginCard.vue';
 export default class Default extends Vue {
   mounted() {
     // if logined
-    const {userInfo} = this;
+    const { userInfo } = this;
     if (userInfo.username && userInfo.isAdmin) {
       const arr = [
         {
