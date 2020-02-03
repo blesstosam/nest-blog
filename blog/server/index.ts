@@ -21,10 +21,7 @@ config.dev = app.env !== 'production';
 async function start() {
   const nuxt = new Nuxt(config);
 
-  const {
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT
-  } = nuxt.options.server;
+  const { host = process.env.HOST || '127.0.0.1', port = process.env.PORT } = nuxt.options.server;
 
   // Build in development
   if (config.dev) {
