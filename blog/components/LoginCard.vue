@@ -59,9 +59,11 @@ export default class LoginCard extends Vue {
   get isShow() {
     return this.show;
   }
+
   set isShow(val) {
     this.handleEmit(val);
   }
+
   @Emit('update:show')
   handleEmit(val: boolean) {
     return val;

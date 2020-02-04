@@ -58,6 +58,7 @@ export default class AddContent extends Vue {
       }
     }
   }
+
   reset() {
     (this.$refs.form as any).reset();
   }
