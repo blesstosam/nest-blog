@@ -27,6 +27,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/vuetify": "^1.0.0",
     "cross-env": "^5.2.0",
+    "dayjs": "^1.8.19",
     "iview": "^3.1.5",
     "koa": "^2.6.2",
     "koa-router": "^7.4.0",

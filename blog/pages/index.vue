@@ -38,7 +38,7 @@ import { Pager } from '../types';
   async asyncData({req, params}) {
     const pager: Pager = {
       current: 1,
-      pageSize: 2,
+      pageSize: 10,
       total: 0
     };
     const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });

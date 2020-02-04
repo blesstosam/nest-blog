@@ -1,22 +1,15 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer v-model="drawer" :mini-variant="miniVariant" :clipped="clipped" fixed app>
-      <v-list>
-        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-btn
+        v-for="(item, i) in items"
+        :key="i"
+        text
+        style="margin-right: 12px;"
+        @click="$router.push(item.to)"
+        >{{ item.title }}</v-btn
+      >
 
-      <v-toolbar-title v-text="title" />
       <v-spacer />
       <div v-show="userInfo.username">
         <span>{{ userInfo.username }}, 您好！</span>
@@ -26,9 +19,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container>
-        <nuxt />
-      </v-container>
+      <nuxt />
     </v-content>
 
     <v-footer :fixed="fixed" app class="text-center">
@@ -55,9 +46,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { logout } from '../api/user/index';
 import LoginCard from '@/components/LoginCard.vue';
+
+const defaultRoutes = [
+  {
+    icon: 'mdi-apps',
+    title: '首页',
+    to: '/'
+  }
+];
+const adminRoutes = [
+  {
+    icon: 'mdi-lyft',
+    title: '博客列表',
+    to: '/admin/content-list'
+  },
+  {
+    icon: 'mdi-apps',
+    title: '添加博客',
+    to: '/admin/add-content'
+  }
+];
 
 @Component({
   components: { LoginCard }
@@ -67,24 +78,19 @@ export default class Default extends Vue {
     // if logined
     const { userInfo } = this;
     if (userInfo.username && userInfo.isAdmin) {
-      const arr = [
-        {
-          icon: 'mdi-lyft',
-          title: '博客列表',
-          to: '/admin/content-list'
-        },
-        {
-          icon: 'mdi-apps',
-          title: '添加博客',
-          to: '/admin/add-content'
-        }
-      ];
-      this.items = [...this.items, ...arr];
+      this.items = [...this.items, ...adminRoutes];
     }
   }
 
   get userInfo() {
     return this.$store.state.user;
+  }
+
+  @Watch('userInfo')
+  handleLogin(val) {
+    if (val.username && val.isAdmin) {
+      this.items = [...this.items, ...adminRoutes];
+    }
   }
 
   loginDialogShow: boolean = false;
@@ -95,21 +101,14 @@ export default class Default extends Vue {
   miniVariant: boolean = false;
 
   confirm = false;
-  items = [
-    {
-      icon: 'mdi-apps',
-      title: '博客',
-      to: '/'
-    }
-  ];
-
-  title: string = 'Blesstosam的技术博客';
+  items = defaultRoutes;
 
   async doLogout() {
     await logout({ username: this.userInfo.username });
     this.confirm = false;
     localStorage.setItem('user_info', JSON.stringify({}));
     this.$store.commit('UPDATE_USER', {});
+    this.items = defaultRoutes;
   }
 }
 </script>

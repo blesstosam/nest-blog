@@ -1,5 +1,6 @@
+<style lang="stylus"></style>
 <template>
-  <div class="container">
+  <div class="pa-6">
     <h3>添加文章</h3>
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field v-model="title" :rules="titleRules" label="内容标题" required></v-text-field>
