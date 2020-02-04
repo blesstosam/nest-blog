@@ -28,7 +28,7 @@
     "@nuxtjs/vuetify": "1.10.2",
     "cross-env": "5.2.1",
     "dayjs": "1.8.19",
-    "iview": "3.5.1",
+    "iview": "3.5.4",
     "koa": "2.8.1",
     "koa-router": "7.4.0",
     "nuxt": "2.11.0",
