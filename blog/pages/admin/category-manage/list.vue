@@ -1,25 +1,27 @@
 <style lang="stylus">
-.page-index
+.admin-content-list
   .pager
     position fixed
-    bottom 85px
-    left 0
-    right 0
+    bottom 75px
 </style>
 <template>
-  <div class="container page-index">
-    <h3 class="pb-6">文章列表</h3>
-
-    <v-card class="mx-auto" tile>
-      <v-list-item v-for="item in list" :key="item._id" two-line>
-        <v-list-item-content>
-          <v-list-item-title>
-            <a :href="`/blog/${item._id}`">{{ item.title }}</a>
-          </v-list-item-title>
-          <v-list-item-subtitle>{{ item.content }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-    </v-card>
+  <div class="admin-content-list pt-6">
+    <v-data-table
+      v-model="selected"
+      :headers="headers"
+      :items="list"
+      item-key="name"
+      show-select
+      class="elevation-1"
+      :hide-default-footer="true"
+    >
+      <template #item.createdAt="{item}">
+        {{item.createdAt | formatTime}}
+      </template>
+      <template #item.updatedAt="{item}">
+        {{item.updatedAt | formatTime}}
+      </template>
+    </v-data-table>
 
     <v-pagination
       v-model="pager.current"
@@ -32,12 +34,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { contentList } from '../api/user/index';
-import { Pager } from '../types';
+import dayjs from 'dayjs';
+import { contentList } from '@/api/user/index';
+import { Pager } from '@/types';
 
 @Component({
-  /* eslint-disable-next-line */
-  async asyncData({req, params}) {
+  filters: {
+    formatTime(str) {
+      return dayjs(str).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
+  async asyncData() {
     const pager: Pager = {
       current: 1,
       pageSize: 10,
@@ -51,19 +58,23 @@ import { Pager } from '../types';
     }
     return { list: [], pager };
   }
-
-  // middleware: 'logger'
 })
-export default class PagesIndex extends Vue {
-  // 定义数据的类型 这些数据都是通过 asyncData 从服务器传递过来的
-  // asyncData 可以理解为 data 函数， 只不过数据是在服务器定义获取的 然后混合到客户端的data函数里
+export default class ContentList extends Vue {
   list: any[];
   total: number;
   pager: Pager;
-
   get totalPages(): number {
     return Math.ceil(this.pager.total / this.pager.pageSize);
   }
+
+  selected = [];
+  headers = [
+    { text: '标题', value: 'title' },
+    { text: '简介', value: 'desc' },
+    { text: '正文', value: 'content' },
+    { text: '创建时间', value: 'createdAt' },
+    { text: '修改时间', value: 'updatedAt' }
+  ];
 
   async handlePageChange(page: number) {
     this.pager.current = page;

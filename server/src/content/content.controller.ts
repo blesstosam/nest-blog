@@ -57,8 +57,10 @@ export class ContentController {
 
   @ApiOperation({summary: '博客详情'})
   @Get(':id')
-  async detail(@Param('id') id: string) {
-    return await this.contentModel.findOne({_id: id})
+  async detail(@Param('id') id: string): Promise<CommonResponse> {
+    const res =  await this.contentModel.findOne({_id: id})
+    if (res) return {code: 200, msg: '获取成功', data: res}
+    return {code: 500, msg: '获取成功', data: null}
   }
 
   @ApiOperation({summary: '创建博客'})

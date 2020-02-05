@@ -2,11 +2,12 @@
 .admin-content-list
   .pager
     position fixed
-    bottom 45px
+    bottom 75px
+    left 0
+    right 0
 </style>
 <template>
-  <div class="admin-content-list pa-6">
-    <h3 class="pb-3">文章列表</h3>
+  <div class="admin-content-list pt-6">
     <v-data-table
       v-model="selected"
       :headers="headers"
@@ -16,6 +17,15 @@
       class="elevation-1"
       :hide-default-footer="true"
     >
+      <template #item.showDetail="{item}">
+        <v-btn :to="`/admin/content-manage/${item._id}`">详情</v-btn>
+      </template>
+      <template #item.createdAt="{item}">
+        {{item.createdAt | formatTime}}
+      </template>
+      <template #item.updatedAt="{item}">
+        {{item.updatedAt | formatTime}}
+      </template>
     </v-data-table>
 
     <v-pagination
@@ -30,20 +40,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import dayjs from 'dayjs';
-import { contentList } from '../../api/user/index';
-import { Pager } from '../../types';
-
-const formatTime = (list) => {
-  return list.map((item) => {
-    return {
-      ...item,
-      createdAt: dayjs(item.createdAt).format('YYYY-MM-DD HH:mm:ss'),
-      updatedAt: dayjs(item.updatedAt).format('YYYY-MM-DD HH:mm:ss')
-    };
-  });
-};
+import { contentList } from '@/api/user/index';
+import { Pager } from '@/types';
 
 @Component({
+  filters: {
+    formatTime(str) {
+      return dayjs(str).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
   async asyncData() {
     const pager: Pager = {
       current: 1,
@@ -52,10 +57,8 @@ const formatTime = (list) => {
     };
     const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });
     if (res.code === 200) {
-      /* eslint-disable-next-line */
-      let { list = [], total = 0 } = res.data;
+      const { list = [], total = 0 } = res.data;
       pager.total = total;
-      list = formatTime(list);
       return { list, pager };
     }
     return { list: [], pager };
@@ -74,6 +77,7 @@ export default class ContentList extends Vue {
     { text: '标题', value: 'title' },
     { text: '简介', value: 'desc' },
     { text: '正文', value: 'content' },
+    { text: '详情', value: 'showDetail' },
     { text: '创建时间', value: 'createdAt' },
     { text: '修改时间', value: 'updatedAt' }
   ];
@@ -85,7 +89,6 @@ export default class ContentList extends Vue {
     if (res.code === 200) {
       const { list = [], total = 0 } = res.data;
       this.list = [...list];
-      this.list = formatTime(this.list);
       this.pager.total = total;
     } else {
       this.list = [];

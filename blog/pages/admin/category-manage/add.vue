@@ -1,13 +1,10 @@
 <style lang="stylus"></style>
 <template>
-  <div class="pa-6">
-    <h3>添加文章</h3>
+  <div class="pt-6">
     <v-form ref="form" v-model="valid" lazy-validation>
-      <v-text-field v-model="title" :rules="titleRules" label="内容标题" required></v-text-field>
+      <v-text-field v-model="title" :rules="titleRules" label="分类名称" required></v-text-field>
 
-      <v-text-field v-model="desc" label="内容描述"></v-text-field>
-
-      <v-textarea v-model="content" outlined label="内容正文" required></v-textarea>
+      <v-text-field v-model="desc" :rules="titleRules" label="分类描述" required></v-text-field>
 
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">创建</v-btn>
 
@@ -23,11 +20,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { createContent } from '../../api/user/index';
+import { createContent } from '@/api/user/index';
 
 @Component({
-  /* eslint-disable-next-line */
-  async asyncData({ req, params }) {}
   // middleware: 'logger'
 })
 export default class AddContent extends Vue {
@@ -36,7 +31,7 @@ export default class AddContent extends Vue {
 
   valid = true;
   title = '';
-  titleRules = [(v) => !!v || '内容标题不能为空'];
+  titleRules = [(v) => !!v || '不能为空'];
   desc = '';
   content = '';
 

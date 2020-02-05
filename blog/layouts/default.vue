@@ -1,3 +1,8 @@
+<style lang="stylus">
+  .right-footer
+    a
+      margin-right 8px
+</style>
 <template>
   <v-app dark>
     <v-app-bar :clipped-left="clipped" fixed app>
@@ -9,7 +14,6 @@
         @click="$router.push(item.to)"
         >{{ item.title }}</v-btn
       >
-
       <v-spacer />
       <div v-show="userInfo.username">
         <span>{{ userInfo.username }}, 您好！</span>
@@ -22,8 +26,13 @@
       <nuxt />
     </v-content>
 
-    <v-footer :fixed="fixed" app class="text-center">
+    <v-footer :fixed="fixed" app class="d-flex justify-space-between" height="60">
       <span>Copyright &copy; {{ new Date().getFullYear() }}</span>
+      <div class="right-footer">
+        <span><a href="https://segmentfault.com/u/weilei_58f084f7de891" target="blank">Segmentfault</a></span>
+        <span><a href="http://github.com/blesstosam" target="blank">Github</a></span>
+        <span><a href="http://blesstosam.github.io/" target="blank">Cantact me</a></span>
+      </div>
     </v-footer>
 
     <LoginCard :show.sync="loginDialogShow" />
@@ -52,21 +61,18 @@ import { logout } from '../api/user/index';
 
 const defaultRoutes = [
   {
-    icon: 'mdi-apps',
     title: '首页',
     to: '/'
   }
 ];
 const adminRoutes = [
   {
-    icon: 'mdi-lyft',
-    title: '博客列表',
-    to: '/admin/content-list'
+    title: '博客管理',
+    to: '/admin/content-manage/list'
   },
   {
-    icon: 'mdi-apps',
-    title: '添加博客',
-    to: '/admin/add-content'
+    title: '分类管理',
+    to: '/admin/category-manage/list'
   }
 ];
 
