@@ -34,7 +34,7 @@
     "nuxt": "2.11.0",
     "sha256": "0.2.0",
     "typescript": "3.7.5",
-    "vue-property-decorator": "8.2.2"
+    "vue-property-decorator": "8.4.0"
   },
   "devDependencies": {
     "@nuxt/types": "0.6.1",
