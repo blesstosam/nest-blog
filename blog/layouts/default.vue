@@ -9,9 +9,10 @@
       <v-btn
         v-for="(item, i) in items"
         :key="i"
+        exact
+        :to="item.to"
         text
         style="margin-right: 12px;"
-        @click="$router.push(item.to)"
         >{{ item.title }}</v-btn
       >
       <v-spacer />

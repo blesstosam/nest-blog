@@ -1,6 +1,7 @@
 import { prop, modelOptions, arrayProp, Ref } from '@typegoose/typegoose'
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/user/user.model';
+import {Category} from 'src/category/category.model'
 
 @modelOptions({
   schemaOptions: {
@@ -9,17 +10,18 @@ import { User } from 'src/user/user.model';
 })
 export class Content {
   //关联字段--内容分类的id
-  // category: {
-  //   //类型
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   //引用
-  //   ref: 'Category'
-  // }
+  @prop({
+    ref: 'Category',
+    localField: 'cid',
+    foreignField: '_id',
+  })
+  category: Ref<Category>
 
   //关联字段--用户的id
   @prop({
     ref: 'User',
-    // localField: '_id'
+    localField: 'user',
+    foreignField: '_id',
   })
   user: Ref<User>
 

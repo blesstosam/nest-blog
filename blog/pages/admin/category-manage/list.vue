@@ -3,6 +3,8 @@
   .pager
     position fixed
     bottom 75px
+    left 0
+    right 0
 </style>
 <template>
   <div class="admin-content-list pt-6">
@@ -35,7 +37,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import dayjs from 'dayjs';
-import { contentList } from '@/api/user/index';
+import { categoryList } from '@/api/user/index';
 import { Pager } from '@/types';
 
 @Component({
@@ -50,7 +52,7 @@ import { Pager } from '@/types';
       pageSize: 10,
       total: 0
     };
-    const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });
+    const res = await categoryList({ pageSize: pager.pageSize, pageNum: pager.current });
     if (res.code === 200) {
       const { list = [], total = 0 } = res.data;
       pager.total = total;
@@ -69,9 +71,8 @@ export default class ContentList extends Vue {
 
   selected = [];
   headers = [
-    { text: '标题', value: 'title' },
-    { text: '简介', value: 'desc' },
-    { text: '正文', value: 'content' },
+    { text: '分类标题', value: 'categoryTitle' },
+    { text: '分类简介', value: 'categoryDesc' },
     { text: '创建时间', value: 'createdAt' },
     { text: '修改时间', value: 'updatedAt' }
   ];
@@ -79,7 +80,7 @@ export default class ContentList extends Vue {
   async handlePageChange(page: number) {
     this.pager.current = page;
     const { current, pageSize } = this.pager;
-    const res = await contentList({ pageSize, pageNum: current });
+    const res = await categoryList({ pageSize, pageNum: current });
     if (res.code === 200) {
       const { list = [], total = 0 } = res.data;
       this.list = [...list];

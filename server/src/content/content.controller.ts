@@ -4,7 +4,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { ReturnModelType } from '@typegoose/typegoose';
 import { ApiTags, ApiProperty, ApiOperation } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CommonResponse, CommonListResponse } from 'src/types';
+import { CommonResponse, CommonListResponse, PagerDto } from 'src/types';
 
 export class CreateContentDto {
   @ApiProperty({description: '用户id', example: '5e3002bef4b5d41f52cad5d0'})
@@ -27,14 +27,6 @@ export class CreateContentDto {
 
   @ApiProperty({description: '评论', example: []})
   comments: Array<any>
-}
-
-export class PagerDto {
-  @ApiProperty({description: '页数', example: 10})
-  pageSize: number; 
-  
-  @ApiProperty({description: '页码', example: 1})
-  pageNum: number
 }
 
 @ApiTags('内容')
