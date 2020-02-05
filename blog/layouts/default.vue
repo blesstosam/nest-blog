@@ -1,7 +1,7 @@
 <style lang="stylus">
-  .right-footer
-    a
-      margin-right 8px
+.right-footer
+  a
+    margin-right 8px
 </style>
 <template>
   <v-app dark>
@@ -29,7 +29,11 @@
     <v-footer :fixed="fixed" app class="d-flex justify-space-between" height="60">
       <span>Copyright &copy; {{ new Date().getFullYear() }}</span>
       <div class="right-footer">
-        <span><a href="https://segmentfault.com/u/weilei_58f084f7de891" target="blank">Segmentfault</a></span>
+        <span
+          ><a href="https://segmentfault.com/u/weilei_58f084f7de891" target="blank"
+            >Segmentfault</a
+          ></span
+        >
         <span><a href="http://github.com/blesstosam" target="blank">Github</a></span>
         <span><a href="http://blesstosam.github.io/" target="blank">Cantact me</a></span>
       </div>

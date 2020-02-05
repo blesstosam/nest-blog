@@ -21,10 +21,10 @@
         <v-btn :to="`/admin/content-manage/${item._id}`">详情</v-btn>
       </template>
       <template #item.createdAt="{item}">
-        {{item.createdAt | formatTime}}
+        {{ item.createdAt | formatTime }}
       </template>
       <template #item.updatedAt="{item}">
-        {{item.updatedAt | formatTime}}
+        {{ item.updatedAt | formatTime }}
       </template>
     </v-data-table>
 
@@ -46,7 +46,7 @@ import { Pager } from '@/types';
 @Component({
   filters: {
     formatTime(str) {
-      return dayjs(str).format('YYYY-MM-DD HH:mm:ss')
+      return dayjs(str).format('YYYY-MM-DD HH:mm:ss');
     }
   },
   async asyncData() {

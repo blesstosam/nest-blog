@@ -1,4 +1,3 @@
-
 <template>
   <div class="container pa-6">
     <v-tabs>
@@ -13,9 +12,5 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class ContentManage extends Vue {
-
-
-
-}
+export default class ContentManage extends Vue {}
 </script>
