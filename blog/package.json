@@ -56,13 +56,13 @@
     "husky": "4.2.1",
     "jsdom": "15.1.1",
     "lint-staged": "8.2.1",
-    "nodemon": "1.19.2",
+    "nodemon": "2.0.2",
     "prettier": "1.19.1",
     "require-extension-hooks": "0.3.3",
     "require-extension-hooks-babel": "1.0.0",
     "require-extension-hooks-vue": "3.0.0",
     "stylus": "0.54.7",
     "stylus-loader": "3.0.2",
-    "ts-node": "8.4.1"
+    "ts-node": "8.6.2"
   }
 }
