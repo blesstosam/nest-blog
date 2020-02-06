@@ -6,14 +6,18 @@ try {
     if (userInfo) {
       const _user = JSON.parse(userInfo);
       // 改写__NUXT__.state
-      window.__NUXT__.state.user = { username: _user.username, isAdmin: _user.isAdmin };
+      window.__NUXT__.state.user = {
+        username: _user.username,
+        isAdmin: _user.isAdmin,
+        id: _user.id
+      };
     }
     // in server side
   } else {
-    user = { username: '', isAdmin: false };
+    user = { username: '', isAdmin: false, _id: '' };
   }
 } catch (e) {
-  user = { username: '', isAdmin: false };
+  user = { username: '', isAdmin: false, _id: '' };
   throw new Error(`parse user_info error in store: ${e}`);
 }
 

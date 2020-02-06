@@ -13,7 +13,9 @@ export function logout(param: { username: string }): Promise<AjaxResponse> {
 }
 
 // 内容
-export function contentList(param: { pageSize: number; pageNum: number }): Promise<AjaxResponse> {
+export function contentList(
+  param: { pageSize: number; pageNum: number } = { pageSize: 10, pageNum: 1 }
+): Promise<AjaxResponse> {
   return httpInstance.get('/content/list', param);
 }
 export function contentDetail(param: { id: string }): Promise<AjaxResponse> {
@@ -24,12 +26,15 @@ export function createContent(param: {
   title: string;
   desc?: string;
   content: string;
+  category: string;
 }): Promise<AjaxResponse> {
   return httpInstance.post('/content/create', param);
 }
 
 // 内容分类
-export function categoryList(param: { pageSize: number; pageNum: number }): Promise<AjaxResponse> {
+export function categoryList(
+  param: { pageSize: number; pageNum: number } = { pageSize: 10, pageNum: 1 }
+): Promise<AjaxResponse> {
   return httpInstance.get('/category/list', param);
 }
 export function createCategory(param: {

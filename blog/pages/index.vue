@@ -9,6 +9,11 @@
 <template>
   <div class="container page-index">
     <h3 class="pb-6">文章列表</h3>
+    <v-btn-toggle v-model="activeCategoryIndex" class="mb-6" @change="changeCategory">
+      <v-btn v-for="item in categoryList" :key="item._id">
+        {{ item.categoryDesc }}
+      </v-btn>
+    </v-btn-toggle>
 
     <v-card class="mx-auto" tile>
       <v-list-item v-for="item in list" :key="item._id" two-line>
@@ -32,24 +37,30 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { contentList } from '../api/user/index';
+import { contentList, categoryList } from '../api/user/index';
 import { Pager } from '../types';
 
 @Component({
-  /* eslint-disable-next-line */
-  async asyncData({req, params}) {
+  async asyncData() {
     const pager: Pager = {
       current: 1,
       pageSize: 10,
       total: 0
     };
-    const res = await contentList({ pageSize: pager.pageSize, pageNum: pager.current });
-    if (res.code === 200) {
+    const [res, categorys] = await Promise.all([
+      await contentList({ pageSize: pager.pageSize, pageNum: pager.current }),
+      await categoryList()
+    ]);
+    if (res.code === 200 && categorys.code === 200) {
       const { list = [], total = 0 } = res.data;
       pager.total = total;
-      return { list, pager };
+      return {
+        list,
+        pager,
+        categoryList: [{ _id: 'all', categoryDesc: '全部' }, ...categorys.data.list]
+      };
     }
-    return { list: [], pager };
+    return { list: [], pager, categoryList: [] };
   }
 
   // middleware: 'logger'
@@ -60,9 +71,17 @@ export default class PagesIndex extends Vue {
   list: any[];
   total: number;
   pager: Pager;
+  categoryList: any[];
+  activeCategoryIndex = 0;
 
   get totalPages(): number {
     return Math.ceil(this.pager.total / this.pager.pageSize);
+  }
+
+  /* eslint-disable-next-line */
+  changeCategory(index: number) {
+    // console.log(index, '999')
+    // TODO 分类查询
   }
 
   async handlePageChange(page: number) {

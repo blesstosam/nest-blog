@@ -1,15 +1,21 @@
 import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import {Content} from './content.model'
 import { InjectModel } from 'nestjs-typegoose';
-import { ReturnModelType } from '@typegoose/typegoose';
+import { ReturnModelType, Ref } from '@typegoose/typegoose';
 import { ApiTags, ApiProperty, ApiOperation } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 import { CommonResponse, CommonListResponse, PagerDto } from 'src/types';
+import { User } from 'src/user/user.model';
+import { Category } from 'src/category/category.model';
 
 export class CreateContentDto {
   @ApiProperty({description: '用户id', example: '5e3002bef4b5d41f52cad5d0'})
   @IsNotEmpty({ message: '缺少用户id' })
-  user: string;
+  user: Ref<User>;
+
+  @ApiProperty({description: '分类id', example: '5e3b7c4b5ed570b000135225'})
+  @IsNotEmpty({ message: '缺少分类id' })
+  category: Ref<Category>;
 
   @ApiProperty({description: '内容标题', example: 'title1'})
   @IsNotEmpty({ message: '缺少内容标题' })
@@ -42,7 +48,7 @@ export class ContentController {
     pageNum = Number(pageNum)
     pageSize = Number(pageSize)
     const total = await this.contentModel.count({})
-    const res = await this.contentModel.find().skip((pageNum -1) * pageSize).limit(pageSize);
+    const res = await this.contentModel.find().skip((pageNum -1) * pageSize).limit(pageSize).populate(['category', 'user']);
     if (res) return {code: 200, msg: '获取成功', data: {total, list: res, pageNum, pageSize }}
     return {code: 500, msg: '获取失败', data: {total: 0, list: res, pageNum, pageSize}}
   }
@@ -50,7 +56,7 @@ export class ContentController {
   @ApiOperation({summary: '博客详情'})
   @Get(':id')
   async detail(@Param('id') id: string): Promise<CommonResponse> {
-    const res =  await this.contentModel.findOne({_id: id})
+    const res =  await this.contentModel.findOne({_id: id}).populate(['category', 'user'])
     if (res) return {code: 200, msg: '获取成功', data: res}
     return {code: 500, msg: '获取成功', data: null}
   }

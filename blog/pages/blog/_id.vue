@@ -12,11 +12,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import { contentDetail } from '../../api/user/index';
 
 @Component({
-  /* eslint-disable-next-line */
-  async asyncData({ req, params }) {
+  async asyncData({ params }) {
     const res = await contentDetail({ id: params.id });
+    if (res.code === 200) {
+      return { detail: res.data };
+    }
     return {
-      detail: res || {}
+      detail: {}
     };
   }
 

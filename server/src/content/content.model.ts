@@ -10,19 +10,11 @@ import {Category} from 'src/category/category.model'
 })
 export class Content {
   //关联字段--内容分类的id
-  @prop({
-    ref: 'Category',
-    localField: 'cid',
-    foreignField: '_id',
-  })
+  @prop({ ref: 'Category' })
   category: Ref<Category>
 
   //关联字段--用户的id
-  @prop({
-    ref: 'User',
-    localField: 'user',
-    foreignField: '_id',
-  })
+  @prop({ ref: 'User' })
   user: Ref<User>
 
   @ApiProperty({description: '内容标题', example: 'title1'})

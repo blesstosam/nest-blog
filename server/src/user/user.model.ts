@@ -1,5 +1,4 @@
 import { prop, modelOptions } from '@typegoose/typegoose'
-import { ApiProperty } from '@nestjs/swagger';
 
 @modelOptions({
   schemaOptions: {
@@ -18,5 +17,5 @@ export class User {
   password!: string;
 
   @prop({default: false})
-  isAdmin: boolean
+  isAdmin: boolean;
 }

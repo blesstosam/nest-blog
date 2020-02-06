@@ -13,7 +13,6 @@
       :headers="headers"
       :items="list"
       item-key="name"
-      show-select
       class="elevation-1"
       :hide-default-footer="true"
     >

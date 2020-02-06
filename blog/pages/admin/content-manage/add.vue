@@ -3,6 +3,14 @@
   <div class="pt-6">
     <h3>添加文章</h3>
     <v-form ref="form" v-model="valid" lazy-validation>
+      <v-select
+        v-model="categoryId"
+        item-value="_id"
+        item-text="categoryTitle"
+        :items="categoryList"
+        label="文章分类"
+      >
+      </v-select>
       <v-text-field v-model="title" :rules="titleRules" label="内容标题" required></v-text-field>
 
       <v-text-field v-model="desc" label="内容描述"></v-text-field>
@@ -23,14 +31,26 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { createContent } from '@/api/user/index';
+import { createContent, categoryList } from '../../../api/user/index';
 
 @Component({
   // middleware: 'logger'
+  async asyncData() {
+    const resp = await categoryList();
+    if (resp.code === 200) {
+      return {
+        categoryList: resp.data.list
+      };
+    }
+    return { categoryList: [] };
+  }
 })
 export default class AddContent extends Vue {
   snackbar = false;
   snackbarText = '';
+
+  // 分类id
+  categoryId: string = '';
 
   valid = true;
   title = '';
@@ -38,21 +58,27 @@ export default class AddContent extends Vue {
   desc = '';
   content = '';
 
+  get userInfo() {
+    return this.$store.state.user;
+  }
+
   async validate() {
     if ((this.$refs.form as any).validate()) {
-      const { title, desc, content } = this;
-      const _userInfo = localStorage.getItem('user_info');
-      if (_userInfo) {
-        const userInfo = JSON.parse(_userInfo);
-        const res = await createContent({ title, desc, content, user: userInfo.id });
-        if (res.code === 200) {
-          this.snackbarText = res.msg;
-          this.snackbar = true;
-          (this.$refs.form as any).reset();
-        } else {
-          this.snackbarText = res.msg;
-          this.snackbar = true;
-        }
+      const { title, desc, content, categoryId, userInfo } = this;
+      const res = await createContent({
+        title,
+        desc,
+        content,
+        user: userInfo.id,
+        category: categoryId
+      });
+      if (res.code === 200) {
+        this.snackbarText = res.msg;
+        this.snackbar = true;
+        (this.$refs.form as any).reset();
+      } else {
+        this.snackbarText = res.msg;
+        this.snackbar = true;
       }
     }
   }
