@@ -10,11 +10,6 @@
 
       <v-btn color="error" class="mr-4" @click="reset">重置</v-btn>
     </v-form>
-
-    <v-snackbar v-model="snackbar">
-      {{ snackbarText }}
-      <v-btn color="pink" text @click="snackbar = false">关闭</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -26,9 +21,6 @@ import { createCategory } from '../../../api/user/index';
   // middleware: 'logger'
 })
 export default class AddContent extends Vue {
-  snackbar = false;
-  snackbarText = '';
-
   valid = true;
   title = '';
   titleRules = [(v) => !!v || '不能为空'];
@@ -38,12 +30,12 @@ export default class AddContent extends Vue {
       const { title, desc } = this;
       const res = await createCategory({ categoryTitle: title, categoryDesc: desc });
       if (res.code === 200) {
-        this.snackbarText = res.msg;
-        this.snackbar = true;
+        // @ts-ignore
+        this.$snackbar(res.msg);
         (this.$refs.form as any).reset();
       } else {
-        this.snackbarText = res.msg;
-        this.snackbar = true;
+        // @ts-ignore
+        this.$snackbar(res.msg);
       }
     }
   }

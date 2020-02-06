@@ -23,7 +23,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/help'],
+  plugins: ['@/plugins/help', '@/components/snackbar'],
   /*
    ** Nuxt.js dev-modules
    */

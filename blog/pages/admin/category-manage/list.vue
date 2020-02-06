@@ -36,8 +36,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import dayjs from 'dayjs';
-import { categoryList } from '@/api/user/index';
-import { Pager } from '@/types';
+import { categoryList } from '../../../api/user/index';
+import { Pager } from '../../../types';
 
 @Component({
   filters: {

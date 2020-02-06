@@ -21,11 +21,6 @@
 
       <v-btn color="error" class="mr-4" @click="reset">重置</v-btn>
     </v-form>
-
-    <v-snackbar v-model="snackbar">
-      {{ snackbarText }}
-      <v-btn color="pink" text @click="snackbar = false">关闭</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -46,8 +41,6 @@ import { createContent, categoryList } from '../../../api/user/index';
   }
 })
 export default class AddContent extends Vue {
-  snackbar = false;
-  snackbarText = '';
 
   // 分类id
   categoryId: string = '';
@@ -73,12 +66,12 @@ export default class AddContent extends Vue {
         category: categoryId
       });
       if (res.code === 200) {
-        this.snackbarText = res.msg;
-        this.snackbar = true;
+        // @ts-ignore
+        this.$snackbar(res.msg);
         (this.$refs.form as any).reset();
       } else {
-        this.snackbarText = res.msg;
-        this.snackbar = true;
+        // @ts-ignore
+        this.$snackbar(res.msg);
       }
     }
   }
