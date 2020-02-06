@@ -1,9 +1,9 @@
 import Vue from 'vue';
-import toastComponent from './Snackbar.vue';
-const ToastConstructor = Vue.extend(toastComponent);
+import Snackbar from './Snackbar.vue';
+const SnackbarConstructor = Vue.extend(Snackbar);
 
-function showToast(snackbarText) {
-  const toastDom = new ToastConstructor({
+function init(snackbarText) {
+  const _dom = new SnackbarConstructor({
     el: document.createElement('div'),
     created() {
       this.snackbarText = snackbarText;
@@ -16,14 +16,13 @@ function showToast(snackbarText) {
     }
   });
 
-  // 把实例化的toast.vue 添加到body中
-  document.body.appendChild(toastDom.$el);
-  return toastDom;
+  document.body.appendChild(_dom.$el);
+  return _dom;
 }
 
 // 注册为全局组件的函数
 function registerSnackbar() {
-  Vue.prototype.$snackbar = showToast;
+  Vue.prototype.$snackbar = init;
 }
 
 export default () => {
