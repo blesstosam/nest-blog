@@ -41,7 +41,6 @@ import { createContent, categoryList } from '../../../api/user/index';
   }
 })
 export default class AddContent extends Vue {
-
   // 分类id
   categoryId: string = '';
 

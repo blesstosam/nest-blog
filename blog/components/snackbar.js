@@ -1,5 +1,4 @@
 import Vue from 'vue';
-console.log(100)
 import toastComponent from './Snackbar.vue';
 const ToastConstructor = Vue.extend(toastComponent);
 
@@ -14,7 +13,7 @@ function showToast(snackbarText) {
         snackbar: true,
         snackbarText: ''
       };
-    },
+    }
   });
 
   // 把实例化的toast.vue 添加到body中
