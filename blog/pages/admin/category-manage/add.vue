@@ -31,11 +31,11 @@ export default class AddContent extends Vue {
       const res = await createCategory({ categoryTitle: title, categoryDesc: desc });
       if (res.code === 200) {
         // @ts-ignore
-        this.$snackbar(res.msg);
+        this.$snackbar(res.msg, 'success');
         (this.$refs.form as any).reset();
       } else {
         // @ts-ignore
-        this.$snackbar(res.msg);
+        this.$snackbar(res.msg, 'error');
       }
     }
   }

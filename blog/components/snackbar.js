@@ -2,15 +2,17 @@ import Vue from 'vue';
 import Snackbar from './Snackbar.vue';
 const SnackbarConstructor = Vue.extend(Snackbar);
 
-function init(snackbarText) {
+function init(snackbarText, color) {
   const _dom = new SnackbarConstructor({
     el: document.createElement('div'),
     created() {
       this.snackbarText = snackbarText;
+      this.color = color;
     },
     data() {
       return {
         snackbar: true,
+        color: '',
         snackbarText: ''
       };
     }
