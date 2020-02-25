@@ -1,6 +1,6 @@
-import { AjaxResponse } from '@/types';
 import { HttpService } from '../util';
 import { baseUrl } from '../server';
+import { AjaxResponse } from '@/types';
 
 export const httpInstance = new HttpService(baseUrl);
 

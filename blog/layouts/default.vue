@@ -61,8 +61,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import LoginCard from '@/components/LoginCard.vue';
 import { logout } from '../api/user/index';
+import LoginCard from '@/components/LoginCard.vue';
 
 const defaultRoutes = [
   {
