@@ -37,5 +37,7 @@ export const mutations = {
 //     // if (req.session.user) {
 //       commit('UPDATE_USER', {username: '999', isAdmin: true})
 //     // }
+
+//     // 如果想把客户端的状态通过服务器还原到客户端（刷新时有这种场景） 只能客户端通过cookie把信息传到服务器，然后服务器再原样返回
 //   }
 // }
