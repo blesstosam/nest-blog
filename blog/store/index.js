@@ -1,4 +1,5 @@
 let user;
+
 try {
   // in client side
   if (typeof window !== 'undefined') {

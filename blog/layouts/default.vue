@@ -94,7 +94,7 @@ export default class Default extends Vue {
   }
 
   get userInfo() {
-    return this.$store.state.user;
+    return this.$store.state.user || {};
   }
 
   @Watch('userInfo')
