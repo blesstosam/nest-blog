@@ -31,7 +31,7 @@
     "cookie-parser": "1.4.4",
     "hbs": "4.1.0",
     "md5.js": "1.3.5",
-    "mongoose": "5.9.2",
+    "mongoose": "5.13.9",
     "nestjs-typegoose": "7.0.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.0",
