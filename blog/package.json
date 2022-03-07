@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "5.9.5",
-    "@nuxtjs/vuetify": "1.10.3",
+    "@nuxtjs/vuetify": "1.12.3",
     "cross-env": "7.0.0",
     "dayjs": "1.8.21",
     "koa": "2.11.0",
